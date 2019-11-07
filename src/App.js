@@ -22,39 +22,29 @@ class App extends React.Component {
     images,
     clicked: [0],
     wins: 0,
-    highScore: 0
+    highScore: 0,
+    message: "Click on the Images to begin! But be sure not to click the same image twice"
   }
 
   newState = {...this.state};
-
-  alreadyGuessed = () => {
-    alert("Guessed this");
-    
-    this.setState({clicked: this.newState.clicked});
-  }
-  notGuessed = () => {
-    this.setState({clicked: this.newState.clicked});
-  }
-
-  ifMatched = false;
 
   handleClick = (event) => {
     const id = event.target.id;
 
     const lose = () => {
-      console.log("Game Over");
       this.newState.wins > this.newState.highScore ? this.newState.highScore = this.newState.wins : console.log("No score change");
-
+      this.newState.message = "You've Already Guessed that!! Game Over! Click to play again"
       this.newState.clicked = [];
       this.newState.wins = 0;
       console.log("Wins: " + this.newState.wins);
       this.setState(this.newState);
     }
     const win = () => {
-      console.log("Well Done!");
+      const praise = ["Well Done!", "Look at you go!", "Attaboy!"];
 
       this.newState.clicked.push(id);
       this.newState.wins++;
+      this.newState.message = praise[Math.floor(Math.random() * praise.length)];
       console.log("Wins: " + this.newState.wins);
       this.setState(this.newState);
     }
@@ -67,6 +57,9 @@ class App extends React.Component {
       return (
         <Jumbotron>
           <div className="jumbotron">
+            <h2>{`Message:`}</h2>
+              <p>{`${this.state.message}`}</p>
+             
             <h2>{`Wins: ${this.state.wins}`}</h2>
             <h2>{`High Score: ${this.state.highScore}`}</h2>
             {this.state.images.map(image => (
