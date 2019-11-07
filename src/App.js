@@ -39,34 +39,29 @@ class App extends React.Component {
   ifMatched = false;
 
   handleClick = (event) => {
-    console.log(this.ifMatched);
     const id = event.target.id;
-    // this.newState.clicked.push(id);
-    this.newState.clicked.map(imageId => (id === imageId ? this.ifMatched = true: this.ifMatched = false))
-    // this.setState({clicked: id});
-    console.log(this.ifMatched);
-    const match = () => {
-      console.log("Match");
-    }
-    const noMatch = () => {
-      this.newState.clicked.push(id)
-      console.log("No Match");
-    }
-    this.ifMatched ? match() : noMatch();
-    console.log("NEWSTATE:");
-    console.log(this.newState.clicked);
 
-    // this.newState.clicked.map(image => (
-    //   // console.log("Image: " + image)
-    //   image === id ? this.alreadyGuessed() : console.log("Good togo ")
-    // ))
-    // this.newState.clicked.push(id);
+    const lose = () => {
+      console.log("Game Over");
+      this.newState.wins > this.newState.highScore ? this.newState.highScore = this.newState.wins : console.log("No score change");
 
-    // console.log("newState.clicked");
-    // console.log(this.newState.clicked);
-    // console.log("ID of click: " + id);
+      this.newState.clicked = [];
+      this.newState.wins = 0;
+      console.log("Wins: " + this.newState.wins);
+      this.setState(this.newState);
+    }
+    const win = () => {
+      console.log("Well Done!");
+
+      this.newState.clicked.push(id);
+      this.newState.wins++;
+      console.log("Wins: " + this.newState.wins);
+      this.setState(this.newState);
+    }
+
+    this.newState.clicked.includes(id) ? lose(): win();
     
-    // this.randomizeImages();
+    this.randomizeImages();
   }
   render(){
       return (
