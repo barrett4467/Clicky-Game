@@ -20,14 +20,55 @@ class App extends React.Component {
   }
   state = {
     images,
-    clicked: false,
+    newClick: "0",
+    clicked: [1],
     wins: 0,
     highScore: 0
   }
-  handleClick = (event) => {
-    event.preventDefault();
-    console.log(event.target);
-    this.state.clicked ? this.setState({clicked: true}) : console.log(false);
+  handleClick = (image) => {
+    const clickedImages = this.state.clicked;
+    // console.log(image.id); 
+    // console.log(clickedImages);
+
+    const lose = () => {
+      console.log("Tis been clicked before!! Game Over!");
+      this.setState({
+        wins: 0,
+        clicked: [1]
+      });
+    }
+    const win = () => {
+      console.log("YESS!");
+      this.setState({
+        wins: this.state.wins + 1,
+        clicked: this.state.clicked + this.state.newClick
+      })
+    }
+    this.setState({newClick: image.id}, () => {
+      console.log(this.state.clicked);
+      console.log(this.state.newClick);
+      clickedImages.map(clicked => ( 
+        clicked === this.state.newClick ?  lose() : win()
+      ))
+    });
+    // this.setState({newClick: image.id}, () => {
+    //   console.log("Old: " + this.state.clicked); 
+    //   for(var i = 0; i < clickedImages.length - 0; i++){
+    //     console.log(clickedImages[i]);
+    //     console.log(this.state.newClick);
+    //     parseInt(clickedImages[i]) === this.state.newClick ? lose() : win()
+    //   }
+    // })
+
+    // this.setState({clicked: this.state.clicked + image.id}, () => {
+
+
+
+      // console.log(clickedImages);
+    // });
+    
+
+    // this.state.clicked ? this.setState({clicked: true}) : console.log(false);
     // const lose = () => {
     //   alert("You've already guessed this!! Try Again");
     //   this.setState({wins:  0});
@@ -44,7 +85,7 @@ class App extends React.Component {
       // this.state.clicked ? lose() : win();
       // this.state.highScore < this.state.wins ? this.setState({highScore: this.state.wins}) : this.setState({highScore: this.state.highScore})
 
-    this.randomizeImages();
+    // this.randomizeImages();
   }
 
   render(){
@@ -55,7 +96,7 @@ class App extends React.Component {
           <h2>{`High Score: ${this.state.highScore}`}</h2>
           {this.state.images.map(image => (
             <button
-              onClick={this.handleClick}
+              onClick={()=>this.handleClick(image)}
               id={image.id}
               >
               <Container 
@@ -64,6 +105,7 @@ class App extends React.Component {
                   <ImageCard
                   id={image.id}
                   image={image.image}
+                  clicked= {this.state.clicked}
                   />
               </Container>
              </button>

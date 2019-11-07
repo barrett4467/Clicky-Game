@@ -10,7 +10,9 @@ const Card = styled.div `
   }
 
 `
+
 function Container(props) {
+  // console.log(props.children.props);
   return (
     <Card>
       <div className="card" id={props.children.props.id}>
