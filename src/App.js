@@ -21,69 +21,50 @@ class App extends React.Component {
   state = {
     images,
     newClick: "0",
-    clicked: [1],
+    clicked: [],
     wins: 0,
     highScore: 0
   }
-  handleClick = (image) => {
-    const clickedImages = this.state.clicked;
-    // console.log(image.id); 
-    // console.log(clickedImages);
+  
+  clickedImages = [];
 
-    const lose = () => {
-      console.log("Tis been clicked before!! Game Over!");
+  handleClick = (image) => {
+    this.clickedImages.push(image.id);
+    const newClick = image.id;
+    
+    console.log(this.state.clicked);
+    console.log(this.clickedImages);
+    // // console.log(image.id);
+    
+    // console.log("Clicked from state: ");
+    // console.log(this.state.clicked);
+    const match = () => {
+      //if it matches that means that the image has been guessed already
+      this.clickedImages = [];
+
+      //reset wins to 0 & clicked to empty array
       this.setState({
         wins: 0,
-        clicked: [1]
+        clicked: [15]
       });
+      console.log("In Match: " + this.state.clicked);
+      console.log("I'm in match");
     }
-    const win = () => {
-      console.log("YESS!");
+    const noMatch = () => {
+      console.log("No match");
+      console.log("Image Id: " + image.id);
       this.setState({
         wins: this.state.wins + 1,
-        clicked: this.state.clicked + this.state.newClick
-      })
+        clicked: this.clickedImages
+      });
+      console.log("Winner: " + this.state.wins);
     }
-    this.setState({newClick: image.id}, () => {
-      console.log(this.state.clicked);
-      console.log(this.state.newClick);
-      clickedImages.map(clicked => ( 
-        clicked === this.state.newClick ?  lose() : win()
-      ))
-    });
-    // this.setState({newClick: image.id}, () => {
-    //   console.log("Old: " + this.state.clicked); 
-    //   for(var i = 0; i < clickedImages.length - 0; i++){
-    //     console.log(clickedImages[i]);
-    //     console.log(this.state.newClick);
-    //     parseInt(clickedImages[i]) === this.state.newClick ? lose() : win()
-    //   }
-    // })
+    for (let i = 0; i < this.state.clicked.length - 1; i++){
+      console.log("Past: " + this.state.clicked[i])
+      this.state.clicked[i] === newClick ? match() : noMatch()
+    }
 
-    // this.setState({clicked: this.state.clicked + image.id}, () => {
-
-
-
-      // console.log(clickedImages);
-    // });
-    
-
-    // this.state.clicked ? this.setState({clicked: true}) : console.log(false);
-    // const lose = () => {
-    //   alert("You've already guessed this!! Try Again");
-    //   this.setState({wins:  0});
-    //   console.log("False: " + this.state.clicked);
-    // }
-    // const win = () => {
-    //   this.setState({
-    //     wins : this.state.wins + 1,
-    //     clicked: true
-    //   });
-    // }
-
-      // this.state.clicked ? console.log("This has been clicked"): console.log("No click")
-      // this.state.clicked ? lose() : win();
-      // this.state.highScore < this.state.wins ? this.setState({highScore: this.state.wins}) : this.setState({highScore: this.state.highScore})
+    this.setState({clicked: this.clickedImages});
 
     // this.randomizeImages();
   }
