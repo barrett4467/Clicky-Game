@@ -7,3 +7,93 @@
     // We always use the setState method to update a component's state
     this.setState({ count: this.state.count + 1 });
   };
+
+    clickedImages = [];
+  newState = {...this.state};
+  notMatched = true;
+
+  handleClick = (image) => {
+    const newClick = image.id;
+    this.notMatched= true;
+
+    this.clickedImages.push(newClick);
+    // console.log("New Click: " + newClick);
+    const match = () => {
+      this.notMatched = false;
+      //if it matches that means that the image has been guessed already
+      console.log("This.newstate.clicked")
+      console.log(this.newState.clicked);
+
+      //reset wins to 0 & clicked to empty array
+      // this.setState(this.newState);
+      // console.log("In Match: ");
+      // // console.log(this.state);
+      // console.log("I'm in match");
+    };
+    const noMatch = () => {
+      this.notMatched = true;
+      console.log(this.notMatched);
+      console.log("This.newstate.clicked")
+      console.log(this.newState.clicked);
+      // this.setState({
+      //   wins: this.state.wins + 1,
+      //   clicked: this.clickedImages
+      // });
+      // console.log("Winner: " + this.state.wins);
+    }
+    // for (let i = 0; i < this.state.clicked.length - 1; i++){
+    //   this.state.clicked[i] === newClick ? this.setState({clicked: []}) : noMatch();
+    // }
+      
+
+
+    // console.log("Not Matched: " + this.notMatched);
+    this.notMatched ? this.newState.clicked = [] : console.log("good"); 
+    // console.log("Wins: " + this.newState.wins);
+
+    this.newState.clicked = this.clickedImages;
+    // console.log("new state:");
+    // console.log(this.newState.clicked);
+    
+    // console.log(this.state.clicked);
+    // console.log(this.clickedImages);
+    // console.log(this.state.wins)
+    // // console.log(image.id);
+    
+    // console.log("Clicked from state: ");
+    // console.log(this.state.clicked);
+    // const match = () => {
+      //if it matches that means that the image has been guessed already
+      // this.clickedImages = [];
+
+      //reset wins to 0 & clicked to empty array
+      // this.setState({
+      //   wins: 0,
+      //   clicked: []
+      // });
+      // console.log("In Match: " + this.state.clicked);
+      // console.log("I'm in match");
+    // }
+    // const noMatch = () => {
+    //   // console.log("No match");
+    //   // console.log("Image Id: " + image.id);
+    //   this.setState({
+    //     wins: this.state.wins + 1,
+    //     clicked: this.clickedImages
+    //   });
+    //   // console.log("Winner: " + this.state.wins);
+    // }
+    // // for (let i = 0; i < this.state.clicked.length - 1; i++){
+    // //   this.state.clicked[i] === newClick ? this.setState({clicked: []}) : noMatch();
+    // // }
+    
+    // this.setState({clicked: []})
+
+    //   for (let i = 0; i < this.state.clicked.length - 1; i++){
+    //     this.state.clicked[i] === newClick ?  match(): noMatch();
+    //   }
+
+
+    // this.setState({clicked: this.clickedImages});
+
+    // this.randomizeImages();

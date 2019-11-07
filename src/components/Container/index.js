@@ -16,9 +16,7 @@ function Container(props) {
   return (
     <Card>
       <div className="card" id={props.children.props.id}>
-          <div className="card-body">
-            {props.children}
-          </div>
+        {props.children}
       </div>
     </Card>
   )

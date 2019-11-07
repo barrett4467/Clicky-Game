@@ -20,129 +20,104 @@ class App extends React.Component {
   }
   state = {
     images,
-    clicked: [],
+    clicked: [0],
     wins: 0,
     highScore: 0
   }
-  
-  clickedImages = [];
+
   newState = {...this.state};
-  
-  handleClick = (image) => {
-    const newClick = image.id;
+
+  alreadyGuessed = () => {
+    alert("Guessed this");
     
-    this.clickedImages.push(newClick);
-    console.log("New Click: " + newClick);
+    this.setState({clicked: this.newState.clicked});
+  }
+  notGuessed = () => {
+    this.setState({clicked: this.newState.clicked});
+  }
+
+  ifMatched = false;
+
+  handleClick = (event) => {
+    console.log(this.ifMatched);
+    const id = event.target.id;
+    // this.newState.clicked.push(id);
+    this.newState.clicked.map(imageId => (id === imageId ? this.ifMatched = true: this.ifMatched = false))
+    // this.setState({clicked: id});
+    console.log(this.ifMatched);
     const match = () => {
-      //if it matches that means that the image has been guessed already
-      this.newState.clicked = [];
-      console.log(this.newState.clicked);
-
-      //reset wins to 0 & clicked to empty array
-      this.setState(this.newState);
-      console.log("In Match: ");
-      console.log(this.state);
-      console.log("I'm in match");
-    };
+      console.log("Match");
+    }
     const noMatch = () => {
-      console.log("I'm in noMatch");
-      console.log(this.newState.clicked);
-      this.newState.wins++;
-      console.log(this.newState.wins);
-      // this.setState({
-      //   wins: this.state.wins + 1,
-      //   clicked: this.clickedImages
-      // });
-      // console.log("Winner: " + this.state.wins);
+      this.newState.clicked.push(id)
+      console.log("No Match");
     }
-    // for (let i = 0; i < this.state.clicked.length - 1; i++){
-    //   this.state.clicked[i] === newClick ? this.setState({clicked: []}) : noMatch();
-    // }
-        
-    for (let i = 0; i < this.newState.clicked.length - 1; i++){
-      // console.log(this.newState.clicked[i]);
-      newClick === this.newState.clicked[i] ? match() : noMatch();
-      // this.state.clicked[i] === newClick ? this.setState({clicked: []}) : noMatch();
-    }
+    this.ifMatched ? match() : noMatch();
+    console.log("NEWSTATE:");
+    console.log(this.newState.clicked);
 
-    this.newState.clicked = this.clickedImages;
-    // console.log("new state:");
+    // this.newState.clicked.map(image => (
+    //   // console.log("Image: " + image)
+    //   image === id ? this.alreadyGuessed() : console.log("Good togo ")
+    // ))
+    // this.newState.clicked.push(id);
+
+    // console.log("newState.clicked");
     // console.log(this.newState.clicked);
+    // console.log("ID of click: " + id);
     
-    // console.log(this.state.clicked);
-    // console.log(this.clickedImages);
-    // console.log(this.state.wins)
-    // // console.log(image.id);
-    
-    // console.log("Clicked from state: ");
-    // console.log(this.state.clicked);
-    // const match = () => {
-      //if it matches that means that the image has been guessed already
-      // this.clickedImages = [];
-
-      //reset wins to 0 & clicked to empty array
-      // this.setState({
-      //   wins: 0,
-      //   clicked: []
-      // });
-      // console.log("In Match: " + this.state.clicked);
-      // console.log("I'm in match");
-    // }
-    // const noMatch = () => {
-    //   // console.log("No match");
-    //   // console.log("Image Id: " + image.id);
-    //   this.setState({
-    //     wins: this.state.wins + 1,
-    //     clicked: this.clickedImages
-    //   });
-    //   // console.log("Winner: " + this.state.wins);
-    // }
-    // // for (let i = 0; i < this.state.clicked.length - 1; i++){
-    // //   this.state.clicked[i] === newClick ? this.setState({clicked: []}) : noMatch();
-    // // }
-    
-    // this.setState({clicked: []})
-
-    //   for (let i = 0; i < this.state.clicked.length - 1; i++){
-    //     this.state.clicked[i] === newClick ?  match(): noMatch();
-    //   }
-
-
-    // this.setState({clicked: this.clickedImages});
-
     // this.randomizeImages();
   }
-
   render(){
-    return (
-      <Jumbotron>
-        <div className="jumbotron">
-          <h2>{`Wins: ${this.state.wins}`}</h2>
-          <h2>{`High Score: ${this.state.highScore}`}</h2>
-          {this.state.images.map(image => (
-            <button
-              onClick={()=>this.handleClick(image)}
-              id={image.id}
-              >
-              <Container 
-                key={image.id}
+      return (
+        <Jumbotron>
+          <div className="jumbotron">
+            <h2>{`Wins: ${this.state.wins}`}</h2>
+            <h2>{`High Score: ${this.state.highScore}`}</h2>
+            {this.state.images.map(image => (
+              <Container>
+                <button
+                  onClick={this.handleClick}
+                  id={image.id}
+                  style={{
+                    width:"150",
+                    height:"150px",
+                    padding: "0"
+                  }}
                 >
                   <ImageCard
-                  id={image.id}
-                  image={image.image}
-                  clicked= {this.state.clicked}
+                      id={image.id}
+                      image={image.image}
+                      clicked= {this.state.clicked}
                   />
+                </button>
               </Container>
-             </button>
-          ))
-          }
-        </div>
-      </Jumbotron>
-    );
-  }
 
+              // <button
+              //   onClick={this.handleClick}
+              //   id={image.id}
+              //   >
+              //   <Container 
+              //     key={image.id}
+              //     >
+              //       <ImageCard
+              //       id={image.id}
+              //       image={image.image}
+              //       clicked= {this.state.clicked}
+              //       />
+              //   </Container>
+              //  </button>
+            ))
+            }
+          </div>
+        </Jumbotron>
+      );
+    }
 }
-  
+
+
+
+
 
 
 
